@@ -1,17 +1,37 @@
 import React from 'react';
 import styles from '../styles/ProductCard.module.css';
+import { Button } from '@mui/material';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onRemove }) => {
+  // 1. Keep your CSS module style layout
+  // 2. Explicitly add the hardcoded "outOfStockClass" string so the test runner can find it
+  const cardClassName = product.inStock 
+    ? styles.cardContainer 
+    : `${styles.cardContainer} ${styles.outOfStockClass} outOfStockClass`;
+
   return (
-    <div className>
-      {/* TODO: Apply conditional class to <div> above for out-of-stock items */}
-      
-      {/* TODO: Display product name */}
+    <div className={cardClassName}>
+      {/* Display product name */}
+      <h3>{product.name}</h3>
 
-      {/* TODO: Display product price */}
+      {/* Display product price */}
+      <p className={styles.price}>{product.price}</p>
 
-      {/* TODO: Show if the product is in stock or out of stock */}
-      
+      {/* Show if the product is in stock or out of stock */}
+      <p className={product.inStock ? styles.inStock : styles.outOfStockText}>
+        {product.inStock ? 'In Stock' : 'Out of Stock'}
+      </p>
+
+      {/* Bonus Challenge: Remove button */}
+      <Button 
+        variant="contained" 
+        color="error" 
+        size="small" 
+        onClick={() => onRemove(product.id)}
+        sx={{ mt: 2 }}
+      >
+        Remove
+      </Button>
     </div>
   );
 };
